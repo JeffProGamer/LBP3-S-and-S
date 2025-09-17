@@ -1,279 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>LBP3 Fan Hub</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
-      color: white;
-      margin: 0;
-      padding: 0;
-      transition: background 1s;
-    }
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: linear-gradient(90deg, #00a2ff, #ff00aa);
-      padding: 15px;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom: 3px solid #222;
-    }
-    #roblox-icon {
-      position: absolute;
-      left: 15px;
-      top: 10px;
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      border: 2px solid white;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-    #roblox-icon:hover {
-      transform: scale(1.1);
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      background: #111;
-      padding: 10px;
-      position: sticky;
-      top: 65px;
-      z-index: 999;
-    }
-    nav button {
-      background: transparent;
-      border: none;
-      color: #ccc;
-      margin: 0 15px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: color 0.3s;
-    }
-    nav button.active, nav button:hover {
-      color: #fff;
-    }
-    .container {
-      padding: 20px;
-      display: none;
-      animation: fadeIn 0.5s ease-in-out;
-    }
-    .container.active {
-      display: block;
-    }
-    .level-card {
-      background: rgba(255,255,255,0.05);
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      transition: transform 0.3s, background 0.3s;
-    }
-    .level-card:hover {
-      transform: scale(1.02);
-      background: rgba(255,255,255,0.1);
-    }
-    .stats {
-      font-size: 14px;
-      color: #aaa;
-    }
-    .heart-btn, .queue-btn {
-      background: linear-gradient(135deg, #ff0055, #ff66aa);
-      padding: 8px 14px;
-      border-radius: 12px;
-      border: none;
-      color: white;
-      cursor: pointer;
-      margin-left: 5px;
-      transition: transform 0.2s, opacity 0.3s;
-    }
-    .heart-btn:hover, .queue-btn:hover {
-      transform: scale(1.1);
-      opacity: 0.9;
-    }
-    .profile {
-      text-align: center;
-    }
-    .profile img {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 3px solid #00a2ff;
-      margin-bottom: 10px;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+<meta charset="UTF-8">
+<title>LBP3 Fan Hub</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Segoe+UI:wght@400;700&display=swap');
+
+  html, body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow-x: hidden;
+    transition: background 2s ease;
+  }
+
+  body {
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
+    color: #fff;
+  }
+
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: linear-gradient(90deg, #00a2ff, #ff00aa);
+    padding: 15px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-bottom: 3px solid #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #roblox-icon {
+    position: absolute;
+    left: 15px;
+    top: 10px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid white;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+
+  #roblox-icon:hover {
+    transform: scale(1.1);
+  }
+
+  nav {
+    display: flex;
+    justify-content: center;
+    background: #111;
+    padding: 10px;
+    position: sticky;
+    top: 65px;
+    z-index: 999;
+  }
+
+  nav button {
+    background: transparent;
+    border: none;
+    color: #ccc;
+    margin: 0 15px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  nav button.active, nav button:hover {
+    color: #fff;
+  }
+
+  .container {
+    padding: 20px;
+    display: none;
+    animation: fadeIn 0.5s ease-in-out;
+  }
+
+  .container.active {
+    display: block;
+  }
+
+  .level-card {
+    background: rgba(255,255,255,0.05);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s, background 0.3s;
+  }
+
+  .level-card:hover {
+    transform: scale(1.02);
+    background: rgba(255,255,255,0.1);
+  }
+
+  .stats {
+    font-size: 14px;
+    color: #aaa;
+  }
+
+  .heart-btn, .queue-btn {
+    background: linear-gradient(135deg, #ff0055, #ff66aa);
+    padding: 8px 14px;
+    border-radius: 12px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    margin-left: 5px;
+    transition: transform 0.2s, opacity 0.3s;
+  }
+
+  .heart-btn:hover, .queue-btn:hover {
+    transform: scale(1.1);
+    opacity: 0.9;
+  }
+
+  .profile {
+    text-align: center;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 16px;
+  }
+
+  .profile img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #00a2ff;
+    margin-bottom: 10px;
+  }
+
+  .signin-btn {
+    background: linear-gradient(135deg, #00ffdd, #00a2ff);
+    padding: 10px 20px;
+    border-radius: 16px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: transform 0.2s;
+  }
+
+  .signin-btn:hover {
+    transform: scale(1.05);
+  }
+
+  input {
+    padding: 10px;
+    margin: 5px;
+    width: calc(100% - 20px);
+    border-radius: 12px;
+    border: none;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+</style>
 </head>
 <body>
-  <header>
-    <a href="#" id="roblox-link">
-      <img src="assests/robloxicon.png" alt="Roblox" id="roblox-icon">
-    </a>
-    LBP3 Fan Hub
-  </header>
 
-  <nav>
-    <button onclick="showPage('levels')" class="active">Levels</button>
-    <button onclick="showPage('hearted')">Hearted</button>
-    <button onclick="showPage('queue')">Queue</button>
-    <button onclick="showPage('profile')">Profile</button>
-  </nav>
+<header>
+  <a href="#" id="roblox-link">
+    <img src="/default-avatar.png" alt="Roblox" id="roblox-icon">
+  </a>
+  LBP3 Fan Hub
+</header>
 
-  <div class="container active" id="levels">
-    <h2>Levels</h2>
-    <p>Loading levels...</p>
+<nav>
+  <button onclick="showPage('levels')" class="active">Levels</button>
+  <button onclick="showPage('hearted')">Hearted</button>
+  <button onclick="showPage('queue')">Queue</button>
+  <button onclick="showPage('profile')">Profile</button>
+</nav>
+
+<div class="container active" id="levels">
+  <h2>Levels</h2>
+  <p>Loading levels...</p>
+</div>
+
+<div class="container" id="hearted">
+  <h2>Hearted Levels</h2>
+  <p>No hearted levels yet.</p>
+</div>
+
+<div class="container" id="queue">
+  <h2>Queue</h2>
+  <p>No levels in queue yet.</p>
+</div>
+
+<div class="container" id="profile">
+  <div class="profile" id="profile-container">
+    <p id="profile-message">Please sign in to access your profile.</p>
+    <button class="signin-btn" id="signin-btn">Sign in with Roblox</button>
   </div>
+</div>
 
-  <div class="container" id="hearted">
-    <h2>Hearted Levels</h2>
-    <p>No hearted levels yet.</p>
-  </div>
+<script>
+let heartedLevels = [];
+let queuedLevels = [];
+let profileData = null;
+let currentTheme = 0;
+const themes = [
+  "linear-gradient(135deg, #0d0d0d, #1a1a1a)",
+  "linear-gradient(135deg, #001f3f, #0074D9)",
+  "linear-gradient(135deg, #3D9970, #2ECC40)",
+  "linear-gradient(135deg, #B10DC9, #FF4136)"
+];
 
-  <div class="container" id="queue">
-    <h2>Queue</h2>
-    <p>No levels in queue yet.</p>
-  </div>
+function showPage(id) {
+  document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
+  document.querySelectorAll(".container").forEach(c => c.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
+  event.target.classList.add("active");
 
-  <div class="container" id="profile">
-    <div class="profile">
-      <img src="assests/robloxicon.png" alt="Profile Image" id="profile-pic">
-      <h3 id="profile-name">Guest</h3>
-      <input type="text" id="name-input" placeholder="Enter name">
-      <input type="text" id="avatar-input" placeholder="Avatar URL">
+  if ((id === "profile" || id === "hearted" || id === "queue") && !profileData) {
+    alert("You must sign in to access this page!");
+    showPage("levels");
+  }
+}
+
+function changeTheme() {
+  currentTheme = (currentTheme + 1) % themes.length;
+  document.body.style.background = themes[currentTheme];
+}
+
+// Roblox login
+document.getElementById("signin-btn").onclick = () => {
+  window.location.href = "/auth/login";
+};
+
+async function loadLevels() {
+  const res = await fetch("/api/levels");
+  const data = await res.json();
+  const container = document.getElementById("levels");
+  container.innerHTML = "<h2>Levels</h2>";
+
+  data.forEach(level => {
+    const div = document.createElement("div");
+    div.className = "level-card";
+    div.innerHTML = `
+      <div>
+        <strong>${level.name}</strong><br>
+        <div class="stats">Visits: ${level.visits} | Playing: ${level.playing} | Hearts: ${level.hearts}</div>
+      </div>
+      <div>
+        <button class="heart-btn" onclick="heartLevel('${level.id}')">❤</button>
+        <button class="queue-btn" onclick="queueLevel('${level.id}')">➕</button>
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+async function loadUser() {
+  try {
+    const res = await fetch("/api/user");
+    if (res.status !== 200) throw "Not signed in";
+
+    profileData = await res.json();
+    document.getElementById("profile-container").innerHTML = `
+      <img src="${profileData.profile.avatar}" alt="Profile Image">
+      <h3>${profileData.profile.name}</h3>
+      <input type="text" id="name-input" placeholder="Enter name" value="${profileData.profile.name}">
+      <input type="text" id="avatar-input" placeholder="Avatar URL" value="${profileData.profile.avatar}">
       <button onclick="saveProfile()">Save Profile</button>
       <br><br>
       <button onclick="changeTheme()">Change Theme</button>
-    </div>
-  </div>
+    `;
+    document.getElementById("roblox-icon").src = profileData.profile.avatar;
 
-  <script>
-    let heartedLevels = [];
-    let queuedLevels = [];
-    let profileData = {};
-    let currentTheme = 0;
-    const themes = [
-      "linear-gradient(135deg, #0d0d0d, #1a1a1a)",
-      "linear-gradient(135deg, #001f3f, #0074D9)",
-      "linear-gradient(135deg, #3D9970, #2ECC40)",
-      "linear-gradient(135deg, #B10DC9, #FF4136)"
-    ];
+    heartedLevels = profileData.hearted || [];
+    queuedLevels = profileData.queue || [];
+    updateHearted();
+    updateQueue();
+  } catch {
+    profileData = null;
+  }
+}
 
-    function showPage(id) {
-      document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
-      document.querySelectorAll(".container").forEach(c => c.classList.remove("active"));
-      document.getElementById(id).classList.add("active");
-      event.target.classList.add("active");
-    }
+async function heartLevel(id) {
+  if (!profileData) return alert("Sign in first!");
+  await fetch(`/api/heart/${id}`, { method: "POST" });
+  if (!heartedLevels.includes(id)) heartedLevels.push(id);
+  updateHearted();
+}
 
-    function changeTheme() {
-      currentTheme = (currentTheme + 1) % themes.length;
-      document.body.style.background = themes[currentTheme];
-    }
+async function queueLevel(id) {
+  if (!profileData) return alert("Sign in first!");
+  await fetch(`/api/queue/${id}`, { method: "POST" });
+  if (!queuedLevels.includes(id)) queuedLevels.push(id);
+  updateQueue();
+}
 
-    async function loadLevels() {
-      const res = await fetch("/api/levels");
-      const data = await res.json();
-      const container = document.getElementById("levels");
-      container.innerHTML = "<h2>Levels</h2>";
+async function saveProfile() {
+  const name = document.getElementById("name-input").value;
+  const avatar = document.getElementById("avatar-input").value;
+  profileData.profile.name = name;
+  profileData.profile.avatar = avatar;
 
-      data.forEach(level => {
-        const div = document.createElement("div");
-        div.className = "level-card";
-        div.innerHTML = `
-          <div>
-            <strong>${level.name}</strong><br>
-            <div class="stats">Visits: ${level.visits} | Playing: ${level.playing} | Hearts: ${level.hearts}</div>
-          </div>
-          <div>
-            <button class="heart-btn" onclick="heartLevel('${level.id}')">❤</button>
-            <button class="queue-btn" onclick="queueLevel('${level.id}')">➕</button>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-    }
+  await fetch("/api/profile", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(profileData.profile)
+  });
+  document.getElementById("roblox-icon").src = avatar;
+  loadUser();
+}
 
-    async function loadUser() {
-      const res = await fetch("/api/user");
-      const data = await res.json();
-      heartedLevels = data.hearted || [];
-      queuedLevels = data.queue || [];
-      profileData = data.profile || { name: "Guest", avatar: "/default-avatar.png" };
+function updateHearted() {
+  const container = document.getElementById("hearted");
+  container.innerHTML = "<h2>Hearted Levels</h2>";
+  if (!heartedLevels.length) container.innerHTML += "<p>No hearted levels yet.</p>";
+  heartedLevels.forEach(id => {
+    const div = document.createElement("div");
+    div.className = "level-card";
+    div.innerHTML = `<strong>Level ID: ${id}</strong>`;
+    container.appendChild(div);
+  });
+}
 
-      document.getElementById("profile-name").textContent = profileData.name;
-      document.getElementById("profile-pic").src = profileData.avatar;
-      document.getElementById("roblox-icon").src = profileData.avatar;
+function updateQueue() {
+  const container = document.getElementById("queue");
+  container.innerHTML = "<h2>Queue</h2>";
+  if (!queuedLevels.length) container.innerHTML += "<p>No queued levels yet.</p>";
+  queuedLevels.forEach(id => {
+    const div = document.createElement("div");
+    div.className = "level-card";
+    div.innerHTML = `<strong>Level ID: ${id}</strong>`;
+    container.appendChild(div);
+  });
+}
 
-      updateHearted();
-      updateQueue();
-    }
-
-    async function heartLevel(id) {
-      await fetch(`/api/heart/${id}`, { method: "POST" });
-      if (!heartedLevels.includes(id)) heartedLevels.push(id);
-      updateHearted();
-    }
-
-    async function queueLevel(id) {
-      await fetch(`/api/queue/${id}`, { method: "POST" });
-      if (!queuedLevels.includes(id)) queuedLevels.push(id);
-      updateQueue();
-    }
-
-    async function saveProfile() {
-      const name = document.getElementById("name-input").value || profileData.name;
-      const avatar = document.getElementById("avatar-input").value || profileData.avatar;
-      profileData = { name, avatar };
-      await fetch("/api/profile", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(profileData)
-      });
-      document.getElementById("profile-name").textContent = name;
-      document.getElementById("profile-pic").src = avatar;
-      document.getElementById("roblox-icon").src = avatar;
-    }
-
-    function updateHearted() {
-      const container = document.getElementById("hearted");
-      container.innerHTML = "<h2>Hearted Levels</h2>";
-      if (heartedLevels.length === 0) {
-        container.innerHTML += "<p>No hearted levels yet.</p>";
-      }
-      heartedLevels.forEach(id => {
-        const div = document.createElement("div");
-        div.className = "level-card";
-        div.innerHTML = `<strong>Level ID: ${id}</strong>`;
-        container.appendChild(div);
-      });
-    }
-
-    function updateQueue() {
-      const container = document.getElementById("queue");
-      container.innerHTML = "<h2>Queue</h2>";
-      if (queuedLevels.length === 0) {
-        container.innerHTML += "<p>No queued levels yet.</p>";
-      }
-      queuedLevels.forEach(id => {
-        const div = document.createElement("div");
-        div.className = "level-card";
-        div.innerHTML = `<strong>Level ID: ${id}</strong>`;
-        container.appendChild(div);
-      });
-    }
-
-    loadLevels();
-    loadUser();
-  </script>
+loadLevels();
+loadUser();
+</script>
 </body>
 </html>
