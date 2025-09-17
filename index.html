@@ -156,7 +156,7 @@
 
   input {
     padding: 10px;
-    margin: 5px;
+    margin: 5px 0;
     width: calc(100% - 20px);
     border-radius: 12px;
     border: none;
@@ -241,26 +241,30 @@ document.getElementById("signin-btn").onclick = () => {
 };
 
 async function loadLevels() {
-  const res = await fetch("/api/levels");
-  const data = await res.json();
-  const container = document.getElementById("levels");
-  container.innerHTML = "<h2>Levels</h2>";
+  try {
+    const res = await fetch("/api/levels");
+    const data = await res.json();
+    const container = document.getElementById("levels");
+    container.innerHTML = "<h2>Levels</h2>";
 
-  data.forEach(level => {
-    const div = document.createElement("div");
-    div.className = "level-card";
-    div.innerHTML = `
-      <div>
-        <strong>${level.name}</strong><br>
-        <div class="stats">Visits: ${level.visits} | Playing: ${level.playing} | Hearts: ${level.hearts}</div>
-      </div>
-      <div>
-        <button class="heart-btn" onclick="heartLevel('${level.id}')">❤</button>
-        <button class="queue-btn" onclick="queueLevel('${level.id}')">➕</button>
-      </div>
-    `;
-    container.appendChild(div);
-  });
+    data.forEach(level => {
+      const div = document.createElement("div");
+      div.className = "level-card";
+      div.innerHTML = `
+        <div>
+          <strong>${level.name}</strong><br>
+          <div class="stats">Visits: ${level.visits} | Playing: ${level.playing} | Hearts: ${level.hearts}</div>
+        </div>
+        <div>
+          <button class="heart-btn" onclick="heartLevel('${level.id}')">❤</button>
+          <button class="queue-btn" onclick="queueLevel('${level.id}')">➕</button>
+        </div>
+      `;
+      container.appendChild(div);
+    });
+  } catch(e) {
+    console.error(e);
+  }
 }
 
 async function loadUser() {
@@ -342,6 +346,7 @@ function updateQueue() {
   });
 }
 
+// Initial load
 loadLevels();
 loadUser();
 </script>
