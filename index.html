@@ -193,17 +193,18 @@
 <body>
 
 <header>
-  <a href="#" id="roblox-link">
+  <a href="signin.html" id="roblox-link">
     <img src="/default-avatar.png" alt="Roblox" id="roblox-icon">
   </a>
   LBP3 Fan Hub
 </header>
 
 <nav>
-  <button onclick="showPage('levels')" class="active">Levels</button>
+  <button onclick="showPage('levels')">Levels</button>
   <button onclick="showPage('hearted')">Hearted</button>
   <button onclick="showPage('queue')">Queue</button>
   <button onclick="showPage('profile')">Profile</button>
+  <button onclick="showPage('signin')"class="active">Sign In</button>
 </nav>
 
 <div class="container active" id="levels">
@@ -219,6 +220,120 @@
 <div class="container" id="queue">
   <h2>Queue</h2>
   <p>No levels in queue yet.</p>
+</div>
+
+<div class="container" id="signin">
+  <h2>Sign In</h2>
+    <style>
+    body {
+      margin: 0;
+      font-family: "Arial", sans-serif;
+      background: linear-gradient(135deg, #000000, #1f1f1f);
+      color: rgb(255, 255, 255);
+      overflow: hidden;
+    }
+/* /index.html
+    /* Blurred fullscreen overlay */
+    #login-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+        background: rgb(0 0 0 / 92%);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+    }
+
+    /* Login box */
+    #login-box {
+      background: rgba(20, 20, 20, 0.85);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+    }
+
+    #login-box h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    #login-box button {
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      border: none;
+      padding: 15px 40px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      color: rgb(29, 29, 29);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    #login-box button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #0072ff;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 220px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      padding: 20px;
+      display: none; /* hidden until login */
+      flex-direction: column;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    #sidebar a {
+      color: rgb(0, 0, 0);
+      text-decoration: none;
+      margin: 12px 0;
+      font-size: 18px;
+      transition: transform 0.2s, color 0.3s;
+    }
+
+    #sidebar a:hover {
+      color: #00c6ff;
+      transform: translateX(5px);
+    }
+
+    /* Main content */
+    #content {
+      margin-left: 220px;
+      padding: 30px;
+      display: none; /* hidden until login */
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+  </style>
+  </head>
+  
+<body>
+  <!-- Login Screen -->
+  <div id="login-overlay">
+    <div id="login-box">
+      <h1>Connect Your Account To Access More Featurs and More ..</h1>
+      <button onclick="window.location.href='/auth/callback'">Connect Your Roblox Account</button>
+      <h1>Its Fully Safe</h1>
+    </div>
+  </div>
 </div>
 
 <div class="container" id="profile">
