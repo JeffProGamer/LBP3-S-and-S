@@ -11,12 +11,12 @@ const app = express();
 app.use(express.json());
 app.use(express.static(__dirname));
 
-// ---------- Session & Passport ----------
 app.use(session({
-  secret: process.env.SESSION_SECRET || "af3f88dd897e2cf0d85d0091f1830bc069059cb99f6d5af4ffb34fcded4ee339964e0b87f85e562a67c20e7d299059da3111d7e2feccfdb3b784bf309fc50fe9",
+  secret: process.env.SESSION_SECRET,
   resave: false,
   saveUninitialized: true
 }));
+
 
 app.use(passport.initialize());
 app.use(passport.session());
