@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LBP3 Sign In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      margin: 0;
+      font-family: "Arial", sans-serif;
+      background: linear-gradient(135deg, #1a1a1a, #333);
+      color: rgb(24, 24, 24);
+      overflow: hidden;
+    }
+/* /index.html
+    /* Blurred fullscreen overlay */
+    #login-overlay {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+    }
+
+    /* Login box */
+    #login-box {
+      background: rgba(20, 20, 20, 0.85);
+      padding: 40px;
+      border-radius: 20px;
+      text-align: center;
+      animation: fadeIn 1s ease-out;
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+    }
+
+    #login-box h1 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    #login-box button {
+      background: linear-gradient(90deg, #00c6ff, #0072ff);
+      border: none;
+      padding: 15px 40px;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: bold;
+      color: white;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.3s;
+    }
+
+    #login-box button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #0072ff;
+    }
+
+    /* Sidebar */
+    #sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 220px;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(6px);
+      padding: 20px;
+      display: none; /* hidden until login */
+      flex-direction: column;
+      animation: slideIn 0.6s ease-out;
+    }
+
+    #sidebar a {
+      color: white;
+      text-decoration: none;
+      margin: 12px 0;
+      font-size: 18px;
+      transition: transform 0.2s, color 0.3s;
+    }
+
+    #sidebar a:hover {
+      color: #00c6ff;
+      transform: translateX(5px);
+    }
+
+    /* Main content */
+    #content {
+      margin-left: 220px;
+      padding: 30px;
+      display: none; /* hidden until login */
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    @keyframes slideIn {
+      from { transform: translateX(-100%); }
+      to { transform: translateX(0); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Login Screen -->
+  <div id="login-overlay">
+    <div id="login-box">
+      <h1>Welcome to LBP3 S&S</h1>
+      <button onclick="window.location.href='/auth/roblox'">Sign in with Roblox</button>
+    </div>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <h2>LBP3 Menu</h2>
+    <a href="#">Home</a>
+    <a href="#">Levels</a>
+    <a href="#">Profile</a>
+    <a href="#">Settings</a>
+  </div>
+
+  <!-- Content -->
+  <div id="content">
+    <h1>Dashboard</h1>
+    <p>Once logged in, your levels, profile, and friends will appear here.</p>
+  </div>
+
+  <script>
+    // When server sets ?loggedIn=1, hide login modal
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get("loggedIn") === "1") {
+      document.getElementById("login-overlay").style.display = "none";
+      document.getElementById("sidebar").style.display = "flex";
+      document.getElementById("content").style.display = "block";
+    }
+  </script>
+</body>
+</html>

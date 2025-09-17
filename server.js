@@ -14,9 +14,10 @@ app.use(express.static(__dirname));
 
 // ---------- Session & Passport ----------
 app.use(session({
-  secret: process.env.SESSION_SECRET,
+  secret: process.env.SESSION_SECRET || "af3f88dd897e2cf0d85d0091f1830bc069059cb99f6d5af4ffb34fcded4ee339964e0b87f85e562a67c20e7d299059da3111d7e2feccfdb3b784bf309fc50fe9",
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,
+  cookie: { maxAge: 24 * 60 * 60 * 1000 } // 1 day
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -48,18 +49,16 @@ passport.use(new OAuth2Strategy({
 
 // ---------- Data persistence ----------
 const DATA_FILE = path.join(__dirname, "data.json");
-
 function loadData() {
   return fs.existsSync(DATA_FILE) ? JSON.parse(fs.readFileSync(DATA_FILE)) : { users: {} };
 }
-
 function saveData(data) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
 
 // ---------- Middleware ----------
 function requireLogin(req, res, next) {
-  if (!req.user) return res.status(401).json({ error: "Login required" });
+  if (!req.user) return res.redirect("/signin.html");
   next();
 }
 
@@ -68,12 +67,28 @@ function requireLogin(req, res, next) {
 // OAuth routes
 app.get("/auth/login", passport.authenticate("oauth2"));
 app.get("/auth/callback",
-  passport.authenticate("oauth2", { failureRedirect: "/" }),
-  (req, res) => res.redirect("/")
+  passport.authenticate("oauth2", { failureRedirect: "/signin.html" }),
+  (req, res) => res.redirect("/index.html")
 );
 
-// Serve main page
-app.get("/", (req, res) => res.sendFile(path.join(__dirname, "index.html")));
+// Home route
+app.get("/", (req, res) => {
+  if (req.user) {
+    res.redirect("/index.html");
+  } else {
+    res.redirect("/signin.html");
+  }
+});
+
+// Protect index.html
+app.get("/index.html", requireLogin, (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+// Serve signin.html without login requirement
+app.get("/signin.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "signin.html"));
+});
 
 // Get user data
 app.get("/api/user", requireLogin, (req, res) => {
@@ -96,7 +111,6 @@ app.get("/api/user", requireLogin, (req, res) => {
 
 // Get Roblox game levels
 const UNIVERSE_ID = "6742973974"; // replace with your universe ID
-
 app.get("/api/levels", async (req, res) => {
   try {
     const robloxRes = await fetch(`https://games.roblox.com/v1/games?universeIds=${UNIVERSE_ID}`);
@@ -152,7 +166,7 @@ app.post("/api/profile", requireLogin, (req, res) => {
 // Logout
 app.get("/auth/logout", (req, res) => {
   req.logout(() => {
-    res.redirect("/");
+    res.redirect("/signin.html");
   });
 });
 
