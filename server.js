@@ -6,6 +6,14 @@ const path = require("path");
 const session = require("express-session");
 const passport = require("passport");
 const { Strategy: OAuth2Strategy } = require("passport-oauth2");
+
+// ======================
+// Roblox OAuth credentials
+// ======================
+const CLIENT_ID = "7189523120821466807";      // Replace with your Roblox OAuth Client ID
+const CLIENT_SECRET = "RBX-Vg4BK4hNRU6vUFuzM5hqoWXCuicM4IPeYGDsffu9-lc9E6b-vY1ez2nxYkn8E_kw"; // Replace with your Roblox OAuth Client Secret
+const REDIRECT_URI = "https://lbp3-s-and-s.onrender.com/auth/callback"; // Your redirect URL
+
 require("dotenv").config();
 
 const app = express();
@@ -14,11 +22,12 @@ app.use(express.static(__dirname));
 
 // ---------- Session & Passport ----------
 app.use(session({
-  secret: process.env.SESSION_SECRET || "af3f88dd897e2cf0d85d0091f1830bc069059cb99f6d5af4ffb34fcded4ee339964e0b87f85e562a67c20e7d299059da3111d7e2feccfdb3b784bf309fc50fe9",
+  secret: process.env.SESSION_SECRET || "f2734c170b845d7ce56ac6b699f259c7779d3cfeb027da40ff308bdb6f0d08c13ceabe0d856f0f33497b8a4951398fde031c6874c992cfd78d1c4c6c9b451a59",
   resave: false,
   saveUninitialized: false,
   cookie: { maxAge: 24 * 60 * 60 * 1000 } // 1 day
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -28,9 +37,9 @@ passport.deserializeUser((obj, done) => done(null, obj));
 passport.use(new OAuth2Strategy({
     authorizationURL: "https://apis.roblox.com/oauth/v1/authorize",
     tokenURL: "https://apis.roblox.com/oauth/v1/token",
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: process.env.REDIRECT_URI,
+    clientID: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    callbackURL: REDIRECT_URI,
     scope: ["openid", "profile"]
   },
   async (accessToken, refreshToken, profile, done) => {
@@ -49,9 +58,11 @@ passport.use(new OAuth2Strategy({
 
 // ---------- Data persistence ----------
 const DATA_FILE = path.join(__dirname, "data.json");
+
 function loadData() {
   return fs.existsSync(DATA_FILE) ? JSON.parse(fs.readFileSync(DATA_FILE)) : { users: {} };
 }
+
 function saveData(data) {
   fs.writeFileSync(DATA_FILE, JSON.stringify(data, null, 2));
 }
@@ -71,7 +82,14 @@ app.get("/auth/callback",
   (req, res) => res.redirect("/index.html")
 );
 
-// Home route
+// Logout
+app.get("/auth/logout", (req, res) => {
+  req.logout(() => {
+    res.redirect("/signin.html");
+  });
+});
+
+// Serve pages
 app.get("/", (req, res) => {
   if (req.user) {
     res.redirect("/index.html");
@@ -80,12 +98,10 @@ app.get("/", (req, res) => {
   }
 });
 
-// Protect index.html
 app.get("/index.html", requireLogin, (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
 
-// Serve signin.html without login requirement
 app.get("/signin.html", (req, res) => {
   res.sendFile(path.join(__dirname, "signin.html"));
 });
@@ -110,7 +126,7 @@ app.get("/api/user", requireLogin, (req, res) => {
 });
 
 // Get Roblox game levels
-const UNIVERSE_ID = "6742973974"; // replace with your universe ID
+const UNIVERSE_ID = "6742973974"; // Replace with your universe ID
 app.get("/api/levels", async (req, res) => {
   try {
     const robloxRes = await fetch(`https://games.roblox.com/v1/games?universeIds=${UNIVERSE_ID}`);
@@ -161,13 +177,6 @@ app.post("/api/profile", requireLogin, (req, res) => {
   db.users[userId].profile = req.body;
   saveData(db);
   res.json({ success: true });
-});
-
-// Logout
-app.get("/auth/logout", (req, res) => {
-  req.logout(() => {
-    res.redirect("/signin.html");
-  });
 });
 
 // Start server
