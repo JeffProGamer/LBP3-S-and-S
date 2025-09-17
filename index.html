@@ -12,12 +12,14 @@
     padding: 0;
     height: 100%;
     overflow-x: hidden;
-    transition: background 2s ease;
+    transition: background 1.5s ease;
+    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
   }
 
   body {
-    background: linear-gradient(135deg, #0d0d0d, #1a1a1a);
     color: #fff;
+    display: flex;
+    flex-direction: column;
   }
 
   header {
@@ -27,7 +29,7 @@
     background: linear-gradient(90deg, #00a2ff, #ff00aa);
     padding: 15px;
     text-align: center;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: bold;
     border-bottom: 3px solid #222;
     display: flex;
@@ -39,8 +41,8 @@
     position: absolute;
     left: 15px;
     top: 10px;
-    width: 40px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     border: 2px solid white;
     cursor: pointer;
@@ -55,30 +57,35 @@
     display: flex;
     justify-content: center;
     background: #111;
-    padding: 10px;
+    padding: 12px;
     position: sticky;
     top: 65px;
     z-index: 999;
+    border-bottom: 1px solid #222;
+    gap: 15px;
+    animation: fadeIn 1s ease;
   }
 
   nav button {
-    background: transparent;
+    background: linear-gradient(135deg, #ff0055, #ff66aa);
     border: none;
-    color: #ccc;
-    margin: 0 15px;
-    font-size: 16px;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: bold;
     cursor: pointer;
-    transition: color 0.3s;
+    transition: transform 0.3s, background 0.5s;
   }
 
   nav button.active, nav button:hover {
-    color: #fff;
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #00ffdd, #00a2ff);
   }
 
   .container {
     padding: 20px;
     display: none;
-    animation: fadeIn 0.5s ease-in-out;
+    animation: fadeIn 0.7s ease-in-out;
   }
 
   .container.active {
@@ -87,18 +94,19 @@
 
   .level-card {
     background: rgba(255,255,255,0.05);
-    padding: 15px;
-    margin: 10px 0;
+    padding: 18px;
+    margin: 12px 0;
     border-radius: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: transform 0.3s, background 0.3s;
+    transition: transform 0.3s, background 0.3s, box-shadow 0.3s;
   }
 
   .level-card:hover {
     transform: scale(1.02);
     background: rgba(255,255,255,0.1);
+    box-shadow: 0 0 20px rgba(255,255,255,0.1);
   }
 
   .stats {
@@ -108,12 +116,13 @@
 
   .heart-btn, .queue-btn {
     background: linear-gradient(135deg, #ff0055, #ff66aa);
-    padding: 8px 14px;
+    padding: 10px 16px;
     border-radius: 12px;
     border: none;
     color: white;
     cursor: pointer;
     margin-left: 5px;
+    font-weight: bold;
     transition: transform 0.2s, opacity 0.3s;
   }
 
@@ -125,10 +134,14 @@
   .profile {
     text-align: center;
     max-width: 400px;
-    margin: auto;
-    padding: 20px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 16px;
+    margin: 30px auto;
+    padding: 30px;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    border: 2px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    transition: transform 0.5s;
   }
 
   .profile img {
@@ -136,36 +149,45 @@
     height: 120px;
     border-radius: 50%;
     border: 3px solid #00a2ff;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
+    transition: transform 0.3s;
+  }
+
+  .profile img:hover {
+    transform: scale(1.1);
   }
 
   .signin-btn {
     background: linear-gradient(135deg, #00ffdd, #00a2ff);
-    padding: 10px 20px;
+    padding: 14px 28px;
     border-radius: 16px;
     border: none;
     color: white;
     cursor: pointer;
-    font-size: 16px;
-    transition: transform 0.2s;
+    font-size: 18px;
+    font-weight: bold;
+    transition: transform 0.3s, box-shadow 0.3s;
   }
 
   .signin-btn:hover {
     transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(0,255,255,0.4);
   }
 
   input {
-    padding: 10px;
-    margin: 5px 0;
-    width: calc(100% - 20px);
+    padding: 12px;
+    margin: 8px 0;
+    width: calc(100% - 24px);
     border-radius: 12px;
     border: none;
+    font-size: 16px;
   }
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(15px); }
     to { opacity: 1; transform: translateY(0); }
   }
+
 </style>
 </head>
 <body>
@@ -210,13 +232,6 @@
 let heartedLevels = [];
 let queuedLevels = [];
 let profileData = null;
-let currentTheme = 0;
-const themes = [
-  "linear-gradient(135deg, #0d0d0d, #1a1a1a)",
-  "linear-gradient(135deg, #001f3f, #0074D9)",
-  "linear-gradient(135deg, #3D9970, #2ECC40)",
-  "linear-gradient(135deg, #B10DC9, #FF4136)"
-];
 
 function showPage(id) {
   document.querySelectorAll("nav button").forEach(btn => btn.classList.remove("active"));
@@ -230,11 +245,6 @@ function showPage(id) {
   }
 }
 
-function changeTheme() {
-  currentTheme = (currentTheme + 1) % themes.length;
-  document.body.style.background = themes[currentTheme];
-}
-
 // Roblox login
 document.getElementById("signin-btn").onclick = () => {
   window.location.href = "/auth/login";
@@ -246,7 +256,6 @@ async function loadLevels() {
     const data = await res.json();
     const container = document.getElementById("levels");
     container.innerHTML = "<h2>Levels</h2>";
-
     data.forEach(level => {
       const div = document.createElement("div");
       div.className = "level-card";
@@ -283,7 +292,6 @@ async function loadUser() {
       <button onclick="changeTheme()">Change Theme</button>
     `;
     document.getElementById("roblox-icon").src = profileData.profile.avatar;
-
     heartedLevels = profileData.hearted || [];
     queuedLevels = profileData.queue || [];
     updateHearted();
@@ -312,7 +320,6 @@ async function saveProfile() {
   const avatar = document.getElementById("avatar-input").value;
   profileData.profile.name = name;
   profileData.profile.avatar = avatar;
-
   await fetch("/api/profile", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -344,6 +351,16 @@ function updateQueue() {
     div.innerHTML = `<strong>Level ID: ${id}</strong>`;
     container.appendChild(div);
   });
+}
+
+function changeTheme() {
+  const themes = [
+    "linear-gradient(135deg, #0d0d0d, #1a1a1a)",
+    "linear-gradient(135deg, #001f3f, #0074D9)",
+    "linear-gradient(135deg, #3D9970, #2ECC40)",
+    "linear-gradient(135deg, #B10DC9, #FF4136)"
+  ];
+  document.body.style.background = themes[Math.floor(Math.random()*themes.length)];
 }
 
 // Initial load
